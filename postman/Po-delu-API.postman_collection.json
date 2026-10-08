@@ -1,0 +1,267 @@
+{
+  "info": {
+    "name": "По делу API",
+    "description": "JWT auth + tasks CRUD for the Frontend/Backend demo exams",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000/api" },
+    { "key": "token", "value": "" },
+    { "key": "taskId", "value": "" },
+    { "key": "subtaskId", "value": "" },
+    { "key": "categoryId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"demo@example.com\",\n  \"password\": \"password123\",\n  \"displayName\": \"Demo\"\n}"
+        },
+        "url": "{{baseUrl}}/auth/register"
+      }
+    },
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();",
+              "if (data.accessToken) pm.collectionVariables.set('token', data.accessToken);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"demo@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": "{{baseUrl}}/auth/login"
+      }
+    },
+    {
+      "name": "Me",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/auth/me"
+      }
+    },
+    {
+      "name": "Create task",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();",
+              "if (data.id) pm.collectionVariables.set('taskId', data.id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Ship exam demo\",\n  \"description\": \"Demo notes\",\n  \"priority\": \"high\",\n  \"status\": \"todo\",\n  \"dueDate\": \"2026-09-30\"\n}"
+        },
+        "url": "{{baseUrl}}/tasks"
+      }
+    },
+    {
+      "name": "List tasks",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/tasks"
+      }
+    },
+    {
+      "name": "List tasks by status",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/tasks?status=todo"
+      }
+    },
+    {
+      "name": "Get task",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/tasks/{{taskId}}"
+      }
+    },
+    {
+      "name": "Update task",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"in_progress\",\n  \"priority\": \"high\"\n}"
+        },
+        "url": "{{baseUrl}}/tasks/{{taskId}}"
+      }
+    },
+    {
+      "name": "Delete task",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/tasks/{{taskId}}"
+      }
+    },
+    {
+      "name": "Restore task",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/tasks/{{taskId}}/restore"
+      }
+    },
+    {
+      "name": "Toggle task",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/tasks/{{taskId}}/toggle"
+      }
+    },
+    {
+      "name": "Reorder tasks",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"items\": [\n    { \"id\": \"{{taskId}}\", \"sortOrder\": 0 }\n  ]\n}"
+        },
+        "url": "{{baseUrl}}/tasks/reorder"
+      }
+    },
+    {
+      "name": "Add subtask",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();",
+              "if (data.id) pm.collectionVariables.set('subtaskId', data.id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"title\": \"First step\"\n}" },
+        "url": "{{baseUrl}}/tasks/{{taskId}}/subtasks"
+      }
+    },
+    {
+      "name": "Update subtask",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"completed\": true\n}" },
+        "url": "{{baseUrl}}/tasks/subtasks/{{subtaskId}}"
+      }
+    },
+    {
+      "name": "Update profile",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"displayName\": \"Demo\"\n}" },
+        "url": "{{baseUrl}}/users/me"
+      }
+    },
+    {
+      "name": "Update settings",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"theme\": \"dark\",\n  \"language\": \"ru\",\n  \"dailyGoal\": 5,\n  \"soundEnabled\": true,\n  \"onboardingCompleted\": true\n}"
+        },
+        "url": "{{baseUrl}}/users/me/settings"
+      }
+    },
+    {
+      "name": "Create category",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();",
+              "if (data.id) pm.collectionVariables.set('categoryId', data.id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Focus\",\n  \"icon\": \"sparkles\"\n}" },
+        "url": "{{baseUrl}}/categories"
+      }
+    },
+    {
+      "name": "Update category",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Deep work\"\n}" },
+        "url": "{{baseUrl}}/categories/{{categoryId}}"
+      }
+    }
+  ]
+}

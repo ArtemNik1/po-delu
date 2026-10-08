@@ -1,0 +1,234 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+
+  --color-canvas: var(--canvas);
+  --color-elevated: var(--elevated);
+  --color-panel: var(--panel);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+
+  --color-critical: var(--critical);
+  --color-high: var(--high);
+  --color-medium: var(--medium);
+  --color-low: var(--low);
+
+  --radius-panel: 1.5rem;
+}
+
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --canvas: #07070a;
+  --elevated: #0f0f14;
+  --panel: rgba(17, 17, 22, 0.82);
+  --line: rgba(255, 255, 255, 0.07);
+  --line-strong: rgba(255, 255, 255, 0.14);
+  --ink: #f2efe9;
+  --muted: #9d9a95;
+  --faint: #6a6862;
+  --accent: #8f9dff;
+  --accent-soft: rgba(143, 157, 255, 0.13);
+  --on-accent: #0a0b12;
+  --glow: rgba(143, 157, 255, 0.2);
+  --critical: #fb7185;
+  --high: #f0a35e;
+  --medium: #9ca3af;
+  --low: #6b7280;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --canvas: #f4f2ed;
+  --elevated: #fffdf9;
+  --panel: rgba(255, 253, 249, 0.86);
+  --line: rgba(22, 20, 16, 0.09);
+  --line-strong: rgba(22, 20, 16, 0.18);
+  --ink: #16140f;
+  --muted: #63605a;
+  --faint: #96918a;
+  --accent: #4152cc;
+  --accent-soft: rgba(65, 82, 204, 0.1);
+  --on-accent: #f8f7f3;
+  --glow: rgba(65, 82, 204, 0.14);
+  --critical: #d63a5a;
+  --high: #c07020;
+  --medium: #6b6862;
+  --low: #8c8880;
+}
+
+/* High contrast. Meaning still comes from labels and symbols, not from hue. */
+[data-theme="colorblind"] {
+  color-scheme: dark;
+  --canvas: #0b1014;
+  --elevated: #161d26;
+  --panel: rgba(22, 29, 38, 0.92);
+  --line: rgba(247, 244, 236, 0.18);
+  --line-strong: rgba(247, 244, 236, 0.38);
+  --ink: #f7f4ec;
+  --muted: #ddd8cc;
+  --faint: #c2bbb0;
+  --accent: #ffc107;
+  --accent-soft: rgba(255, 193, 7, 0.22);
+  --on-accent: #1a1400;
+  --glow: rgba(255, 193, 7, 0.32);
+  --critical: #9ecbff;
+  --high: #ffc107;
+  --medium: #9ecbff;
+  --low: #f7f4ec;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  letter-spacing: -0.011em;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Two soft light sources, fixed behind the app, instead of full-screen gradients. */
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(820px 420px at 10% -12%, var(--glow), transparent 58%),
+    radial-gradient(560px 320px at 100% 0%, color-mix(in srgb, var(--ink) 4%, transparent), transparent 52%);
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+@layer base {
+  input,
+  textarea,
+  button,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 72%, transparent);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+[data-theme="colorblind"] :focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+input[type="date"],
+input[type="time"] {
+  min-width: 0;
+}
+
+/* Native pickers render dark glyphs on dark surfaces without this. */
+:root:not([data-theme="light"]) input[type="date"]::-webkit-calendar-picker-indicator,
+:root:not([data-theme="light"]) input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 999px;
+}
+
+.glass {
+  background: var(--panel);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid var(--line);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@keyframes po-delu-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: po-delu-rise 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

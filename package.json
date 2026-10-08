@@ -1,0 +1,16 @@
+{
+  "name": "po-delu",
+  "private": true,
+  "scripts": {
+    "install:all": "npm ci --prefix frontend && npm ci --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "npm run start:dev --prefix backend",
+    "build:frontend": "npm run build --prefix frontend",
+    "build:backend": "npm run build --prefix backend",
+    "build": "npm run build:frontend && npm run build:backend",
+    "typecheck": "npm run typecheck --prefix frontend",
+    "lint": "npm run lint --prefix frontend && npm run lint --prefix backend",
+    "test": "npm run test --prefix frontend",
+    "test:e2e": "npm run test:e2e --prefix backend"
+  }
+}

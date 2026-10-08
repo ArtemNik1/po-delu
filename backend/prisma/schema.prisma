@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Priority {
+  low
+  medium
+  high
+}
+
+enum TaskStatus {
+  todo
+  in_progress
+  done
+}
+
+enum ThemePreference {
+  dark
+  light
+  colorblind
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  displayName  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  settings    UserSettings?
+  categories  Category[]
+  tasks       Task[]
+  subtasks    Subtask[]
+
+  @@map("users")
+}
+
+model UserSettings {
+  userId              String          @id
+  theme               ThemePreference @default(dark)
+  language            String?
+  weekStartsOn        Int             @default(1)
+  dailyGoal           Int             @default(5)
+  soundEnabled        Boolean         @default(true)
+  onboardingCompleted Boolean         @default(false)
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_settings")
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  userId    String
+  name      String
+  icon      String   @default("sparkles")
+  color     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tasks Task[]
+
+  @@index([userId])
+  @@map("categories")
+}
+
+model Task {
+  id               String     @id @default(uuid())
+  userId           String
+  title            String
+  description      String     @default("")
+  priority         Priority   @default(medium)
+  status           TaskStatus @default(todo)
+  dueDate          DateTime   @db.Date
+  dueTime          String?
+  estimatedMinutes Int?
+  categoryId       String?
+  sortOrder        Int        @default(0)
+  completedAt      DateTime?
+  deletedAt        DateTime?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  subtasks Subtask[]
+
+  @@index([userId])
+  @@index([userId, dueDate])
+  @@index([userId, status])
+  @@map("tasks")
+}
+
+model Subtask {
+  id        String   @id @default(uuid())
+  taskId    String
+  userId    String
+  title     String
+  completed Boolean  @default(false)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([taskId])
+  @@index([userId])
+  @@map("subtasks")
+}
