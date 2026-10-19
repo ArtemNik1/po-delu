@@ -9,8 +9,6 @@ export function addDaysIso(days: number, from = todayIso()): string {
   return addIsoDays(from, days)
 }
 
-// Russian puts the day before the month and needs the genitive month form,
-// which date-fns produces for `MMMM` (formatting) rather than `LLLL` (standalone).
 const LONG_DATE: Record<Language, string> = { en: 'EEEE, MMMM d', ru: 'EEEE, d MMMM' }
 const SHORT_DATE: Record<Language, string> = { en: 'MMM d', ru: 'd MMM' }
 
@@ -33,7 +31,6 @@ export function formatWeekday(value: string, language: Language = getCurrentLang
   return format(fromIsoDay(value), 'EEE', { locale: language === 'en' ? enUS : ru })
 }
 
-/** `HH:mm` from a Postgres `time` value. */
 export function formatTime(value: string | null): string | null {
   if (!value) return null
   const [hours, minutes] = value.split(':')
@@ -41,7 +38,6 @@ export function formatTime(value: string | null): string | null {
   return `${hours.padStart(2, '0')}:${minutes.slice(0, 2)}`
 }
 
-/** Time-of-day greeting as a translation key. */
 export function greetingKey(date = new Date()): TranslationKey {
   const hour = date.getHours()
   if (hour < 12) return 'greeting.morning'

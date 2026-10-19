@@ -19,7 +19,7 @@ export function setStoredToken(token: string | null): void {
     if (token) localStorage.setItem(TOKEN_KEY, token)
     else localStorage.removeItem(TOKEN_KEY)
   } catch {
-    // Ignore storage failures.
+
   }
 }
 

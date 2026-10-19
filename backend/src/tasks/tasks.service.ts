@@ -247,7 +247,6 @@ export class TasksService {
     return title;
   }
 
-  /** Sets the stamp only when status enters done, and clears it when status leaves done. */
   private completionStamp(
     current: TaskStatus,
     next: TaskStatus | undefined,

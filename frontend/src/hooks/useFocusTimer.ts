@@ -6,11 +6,11 @@ interface Session {
   taskId: string
   durationMinutes: number
   running: boolean
-  /** Epoch ms when a running timer reaches zero. */
+
   endsAt: number | null
-  /** Seconds left while idle or paused. */
+
   remaining: number
-  /** True after the user pauses, even if a full second has not elapsed. */
+
   paused: boolean
 }
 
@@ -33,7 +33,7 @@ function write(value: Session | null): void {
     if (value) sessionStorage.setItem(KEY, JSON.stringify(value))
     else sessionStorage.removeItem(KEY)
   } catch {
-    // Session persistence is a convenience, not a requirement.
+
   }
 }
 
@@ -42,12 +42,6 @@ function secondsLeft(session: Session): number {
   return Math.max(0, Math.ceil((session.endsAt - Date.now()) / 1000))
 }
 
-/**
- * Countdown driven by a wall-clock deadline rather than accumulated ticks, so it
- * stays accurate when the tab is throttled, survives navigation within the
- * session, and can never go negative. Exactly one interval runs at a time and
- * the finished state is derived, never written twice.
- */
 export function useFocusTimer(taskId: string, defaultMinutes = 25) {
   const [session, setSession] = useState<Session>(
     () =>
@@ -61,7 +55,6 @@ export function useFocusTimer(taskId: string, defaultMinutes = 25) {
       },
   )
 
-  // Bumped by the interval purely to re-render; the value itself is derived.
   const [, setClock] = useState(0)
 
   const remaining = secondsLeft(session)

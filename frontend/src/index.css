@@ -65,7 +65,6 @@
   --low: #8c8880;
 }
 
-/* High contrast. Meaning still comes from labels and symbols, not from hue. */
 [data-theme="colorblind"] {
   color-scheme: dark;
   --canvas: #0b1014;
@@ -107,7 +106,6 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Two soft light sources, fixed behind the app, instead of full-screen gradients. */
 body::before {
   content: "";
   pointer-events: none;
@@ -163,7 +161,6 @@ input[type="time"] {
   min-width: 0;
 }
 
-/* Native pickers render dark glyphs on dark surfaces without this. */
 :root:not([data-theme="light"]) input[type="date"]::-webkit-calendar-picker-indicator,
 :root:not([data-theme="light"]) input[type="time"]::-webkit-calendar-picker-indicator {
   filter: invert(0.8);

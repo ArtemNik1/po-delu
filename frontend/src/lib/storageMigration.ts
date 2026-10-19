@@ -34,7 +34,7 @@ function migrateKey(storage: Storage, from: string, to: string): void {
   try {
     storage.removeItem(from)
   } catch {
-    // The new key is already stored. Leave the old one only if deletion fails.
+
   }
 }
 
@@ -51,18 +51,17 @@ function migratePrefix(storage: Storage, fromPrefix: string, toPrefix: string): 
   for (const key of keys) migrateKey(storage, key, toPrefix + key.slice(fromPrefix.length))
 }
 
-/** Copies nexora.* browser storage once. A newer po-delu.* value wins. */
 export function migrateLegacyStorage(): void {
   try {
     for (const [from, to] of LOCAL_KEYS) migrateKey(localStorage, from, to)
     migratePrefix(localStorage, CACHE_FROM, CACHE_TO)
   } catch {
-    // Storage can be blocked; the app still starts.
+
   }
   try {
     for (const [from, to] of SESSION_KEYS) migrateKey(sessionStorage, from, to)
   } catch {
-    // Session storage is optional.
+
   }
 }
 

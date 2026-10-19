@@ -25,7 +25,7 @@ function writeAll(drafts: Record<string, string>): void {
     if (Object.keys(drafts).length === 0) sessionStorage.removeItem(STORAGE_KEY)
     else sessionStorage.setItem(STORAGE_KEY, JSON.stringify(drafts))
   } catch {
-    // A blocked sessionStorage only drops the retry copy; the open field still has the text.
+
   }
 }
 

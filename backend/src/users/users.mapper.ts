@@ -2,7 +2,6 @@ import { User, UserSettings } from '@prisma/client';
 
 type UserWithSettings = User & { settings: UserSettings | null };
 
-/** Stored `system` (removed theme) is read as dark so old rows stay valid. */
 export function toPublicTheme(theme: string): 'dark' | 'light' | 'colorblind' {
   if (theme === 'light' || theme === 'colorblind') return theme;
   return 'dark';

@@ -16,10 +16,6 @@ interface ModalProps {
   className?: string
 }
 
-/**
- * Centred dialog on desktop, bottom sheet on phones. Escape closes the
- * topmost overlay.
- */
 export function Modal({ open, onClose, title, description, children, footer, className }: ModalProps) {
   const titleId = useId()
   const descriptionId = useId()

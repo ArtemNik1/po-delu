@@ -6,12 +6,10 @@ function trimString({ value }: { value: unknown }): unknown {
   return typeof value === 'string' ? value.trim() : value;
 }
 
-/** Omitted fields skip validation. `null` is still validated and rejected. */
 function WhenPresent(): PropertyDecorator {
   return ValidateIf((_, value: unknown) => value !== undefined);
 }
 
-/** `null` may clear the color. A present string is still checked. */
 function WhenValue(): PropertyDecorator {
   return ValidateIf(
     (_, value: unknown) => value !== undefined && value !== null,

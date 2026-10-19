@@ -20,7 +20,6 @@ import type { TranslationKey } from './i18n'
 
 export const APP_NAME = 'По делу'
 
-/** Fixed icon set — users pick from these rather than uploading artwork. */
 export const CATEGORY_ICONS: Record<string, LucideIcon> = {
   sparkles: Sparkles,
   briefcase: Briefcase,
@@ -57,7 +56,6 @@ export const PRIORITY_SHORT: Record<Priority, TranslationKey> = {
   high: 'priority.short.high',
 }
 
-/** Shape cue so priority is readable without colour. */
 export const PRIORITY_MARK: Record<Priority, string> = {
   low: '↓',
   medium: '→',
@@ -74,7 +72,6 @@ export const STATUS_KEY: Record<Status, TranslationKey> = {
 
 export const STATUSES = Object.keys(STATUS_KEY) as Status[]
 
-/** Shape cue so status is readable without colour. */
 export const STATUS_MARK: Record<Status, string> = {
   todo: '○',
   in_progress: '◐',

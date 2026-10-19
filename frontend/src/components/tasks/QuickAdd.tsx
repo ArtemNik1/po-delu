@@ -11,7 +11,7 @@ import { Button } from '../ui/Button'
 import { Field, Input, Select, Textarea } from '../ui/Field'
 
 interface QuickAddProps {
-  /** Due date pre-filled for new tasks. New tasks always start as `todo`. */
+
   defaultDate: string
 }
 
@@ -75,7 +75,7 @@ export function QuickAdd({ defaultDate }: QuickAddProps) {
     })
     setSaving(false)
     if (!created) return
-    // Stay open so several tasks can be captured in a row.
+
     setDraft(emptyDraft(defaultDate))
     inputRef.current?.focus()
   }

@@ -47,7 +47,6 @@ function Probe({ taskId, onRender }: { taskId: string; onRender: (value: Subtask
   return <span>{subtasks.length}</span>
 }
 
-/** Mounts a probe that records every render and the value it observed. */
 function mountProbe(taskId: string): Recorder {
   const recorder: Recorder = { renders: 0, results: [] }
   const record = (value: Subtask[]) => {
@@ -63,11 +62,6 @@ afterEach(() => {
   useDataStore.setState({ tasks: [], categories: [], subtasks: [] })
 })
 
-/**
- * Regression guard: Zustand v5 re-renders whenever a selector returns a new
- * reference, so a selector that filtered inline froze the app in an infinite
- * render loop. Derived lists must stay referentially stable.
- */
 describe('useSubtasksOf', () => {
   it('returns only the subtasks of the given task', () => {
     useDataStore.setState({

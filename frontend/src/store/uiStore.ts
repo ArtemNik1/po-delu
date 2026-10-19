@@ -6,7 +6,7 @@ export interface ConfirmRequest {
   description: string
   confirmLabel: string
   tone?: 'danger' | 'default'
-  /** Return `false` to keep the dialog open, for example when the request failed. */
+
   onConfirm: () => void | boolean | Promise<void | boolean>
 }
 
@@ -60,7 +60,7 @@ function writeFlag(key: string, value: boolean): void {
   try {
     localStorage.setItem(key, value ? '1' : '0')
   } catch {
-    // Preference is cosmetic; ignore storage failures.
+
   }
 }
 
@@ -95,7 +95,6 @@ export const useUiStore = create<UiState>((set, get) => ({
   setFilters: (value) => set({ filters: value }),
   resetFilters: () => set({ filters: EMPTY_FILTER }),
 
-  /** Escape handler: close the topmost layer, leaving the rest untouched. */
   closeOverlays: () => {
     const state = get()
     if (state.confirm) return set({ confirm: null })
@@ -111,7 +110,6 @@ export const useUiStore = create<UiState>((set, get) => ({
 
 const QUICK_ADD_PATHS = new Set(['/', '/upcoming', '/inbox'])
 
-/** Opens the form on pages that mount it. Elsewhere, Today owns that form. */
 export function openQuickAdd(pathname: string, navigate: (path: string) => void): void {
   useUiStore.getState().setQuickAddOpen(true)
   if (!QUICK_ADD_PATHS.has(pathname)) navigate('/')

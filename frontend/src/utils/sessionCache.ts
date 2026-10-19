@@ -19,7 +19,7 @@ export function writeSession(snapshot: SessionSnapshot): void {
     const settings = snapshot.settings ? { ...snapshot.settings, week_starts_on: 1 as const } : null
     localStorage.setItem(KEY, JSON.stringify({ ...snapshot, settings }))
   } catch {
-    // A missing snapshot only means the next offline refresh asks to retry.
+
   }
 }
 
@@ -44,11 +44,10 @@ export function clearSessionCache(): void {
   try {
     localStorage.removeItem(KEY)
   } catch {
-    // Ignore storage failures.
+
   }
 }
 
-/** Reads the JWT subject without verifying the signature. Used only to avoid mixing accounts. */
 export function tokenSubject(token: string): string | null {
   try {
     const part = token.split('.')[1]

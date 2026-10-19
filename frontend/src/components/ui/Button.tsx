@@ -60,7 +60,6 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode
 }
 
-/** Square, icon-only control with an accessible name and a comfortable touch target. */
 export function IconButton({ label, children, className, ...props }: IconButtonProps) {
   return (
     <button

@@ -5,10 +5,6 @@ import type { Subtask, Task } from '../types/database'
 import { todayIso } from '../utils/isoDate'
 import { filterTasks, searchTasks, sortTasks } from '../utils/tasks'
 
-/**
- * Selectors must return referentially stable values: Zustand v5 re-renders on
- * every new reference, so derived arrays are memoised here instead.
- */
 export function useSubtasksOf(taskId: string | null): Subtask[] {
   const subtasks = useDataStore((state) => state.subtasks)
   return useMemo(
@@ -30,11 +26,10 @@ export function useTask(taskId: string | null): Task | null {
 }
 
 export function useToday(): string {
-  // Recomputed per render but stable within a session day.
+
   return todayIso()
 }
 
-/** Applies the active search query and filter popover selection, then sorts. */
 export function useVisibleTasks(source: (tasks: Task[]) => Task[]): Task[] {
   const tasks = useDataStore((state) => state.tasks)
   const categories = useDataStore((state) => state.categories)

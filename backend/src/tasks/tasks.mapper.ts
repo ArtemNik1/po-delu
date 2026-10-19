@@ -1,6 +1,5 @@
 import { Subtask, Task } from '@prisma/client';
 
-/** Calendar date stored as PostgreSQL DATE. UTC midnight round-trips without a day shift. */
 export function formatDueDate(value: Date): string {
   return value.toISOString().slice(0, 10);
 }

@@ -9,7 +9,6 @@ const TONE: Record<Priority, string> = {
   high: 'text-high',
 }
 
-/** Arrow plus a short label, so priority is not carried by colour alone. */
 export function PriorityMark({
   priority,
   compact = false,

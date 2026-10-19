@@ -17,12 +17,10 @@ function normalizeTheme({ value }: { value: unknown }): unknown {
   return value === 'system' ? 'dark' : value;
 }
 
-/** Omitted fields skip validation. `null` is still validated and rejected. */
 function WhenPresent(): PropertyDecorator {
   return ValidateIf((_, value: unknown) => value !== undefined);
 }
 
-/** `null` and omitted values skip the remaining checks so a nullable field can be cleared. */
 function WhenValue(): PropertyDecorator {
   return ValidateIf(
     (_, value: unknown) => value !== undefined && value !== null,

@@ -31,7 +31,7 @@ interface AuthState {
   submitting: boolean
   offline: boolean
   error: string | null
-  /** Bumped whenever the active UI language changes so subscribers re-render. */
+
   localeEpoch: number
   initialize: () => Promise<void>
   retrySession: () => Promise<void>

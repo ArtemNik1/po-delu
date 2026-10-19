@@ -20,7 +20,7 @@ import {
   upcomingBucket,
 } from '../tasks'
 
-const TODAY = '2026-09-03' // Thursday
+const TODAY = '2026-09-03'
 
 function completedAtOn(day: string): string {
   const date = fromIsoDay(day)

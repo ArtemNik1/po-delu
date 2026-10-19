@@ -18,7 +18,6 @@ import { firstName } from '../../utils/dates'
 import { IconButton } from '../ui/Button'
 import { LogoMark } from '../ui/Logo'
 
-// Shorter labels than the sidebar so five tabs fit a 360px screen.
 const TABS: { to: string; labelKey: TranslationKey; icon: LucideIcon }[] = [
   { to: '/', labelKey: 'nav.today', icon: Sunrise },
   { to: '/upcoming', labelKey: 'nav.upcomingShort', icon: CalendarDays },
@@ -55,7 +54,6 @@ export function MobileHeader() {
   )
 }
 
-/** Bottom tab bar plus a quick-add action, sized for thumbs. */
 export function MobileTabBar() {
   const navigate = useNavigate()
   const { pathname } = useLocation()

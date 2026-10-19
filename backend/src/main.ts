@@ -24,7 +24,6 @@ async function bootstrap() {
     .map((value) => value.trim())
     .filter(Boolean);
   app.enableCors({
-    // Always pass an array so only matching Origin values are reflected.
     origin: origins,
     credentials: true,
   });

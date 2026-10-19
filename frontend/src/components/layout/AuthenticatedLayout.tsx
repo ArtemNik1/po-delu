@@ -8,10 +8,6 @@ import { CategoryModal } from '../categories/CategoryModal'
 import { ConfirmDialog } from '../ui/ConfirmDialog'
 import { OfflineIndicator } from '../ui/OfflineIndicator'
 
-/**
- * Owns everything that must exist once per signed-in session: the initial data
- * fetch, refresh-on-focus and the overlay layer.
- */
 export function AuthenticatedLayout() {
   const userId = useAuthStore((state) => state.user?.id ?? null)
   const load = useDataStore((state) => state.load)

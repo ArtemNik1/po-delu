@@ -23,7 +23,6 @@ export interface AnalyticsSummary {
 
 export const BAR_TRACK_PX = 128
 
-/** Pixel height of a bar. Zero stays a hairline; larger values are strictly taller. */
 export function barHeightPx(value: number, max: number, track = BAR_TRACK_PX): number {
   if (value <= 0 || max <= 0) return 2
   return Math.max(8, Math.round((value / max) * track))
@@ -40,8 +39,6 @@ export function computeAnalytics(tasks: Task[], dailyGoal: number, today: string
   const completedToday = counts.get(today) ?? 0
   const completedThisWeek = windowDays.reduce((sum, day) => sum + (counts.get(day) ?? 0), 0)
 
-  // Rate is measured against work actually scheduled in the window, so unplanned
-  // days neither inflate nor deflate the number.
   const scheduled = tasks.filter((task) => task.dueDate >= windowStart && task.dueDate <= today)
   const scheduledDone = scheduled.filter((task) => isDone(task)).length
   const completionRate = scheduled.length > 0 ? scheduledDone / scheduled.length : 0

@@ -10,11 +10,6 @@ import { useAuthStore } from '../store/authStore'
 
 export type Translate = (key: TranslationKey, vars?: TranslationVars) => string
 
-/**
- * Reads the active language from the user's settings when set, otherwise the
- * module-level language (browser/storage preference applied in `main.tsx` and
- * `applyLanguage`). `localeEpoch` forces a re-render when language changes.
- */
 export function useLanguage(): Language {
   useAuthStore((state) => state.localeEpoch)
   return useAuthStore((state) => state.settings?.language ?? getCurrentLanguage())

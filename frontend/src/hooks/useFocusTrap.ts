@@ -9,7 +9,6 @@ const FOCUSABLE = [
   '[tabindex]:not([tabindex="-1"])',
 ].join(',')
 
-/** Keeps Tab inside `container` and restores focus to the opener on close. */
 export function useFocusTrap(active: boolean, containerRef: RefObject<HTMLElement | null>): void {
   const opener = useRef<HTMLElement | null>(null)
 

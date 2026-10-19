@@ -15,7 +15,6 @@ export interface TodayProgress {
   percent: number
 }
 
-/** Done and total both come from tasks due on the local day. Empty day is 0/0. */
 export function todayProgress(tasks: Task[], today: string): TodayProgress {
   const dueToday = tasks.filter((task) => task.dueDate === today)
   const total = dueToday.length
@@ -23,7 +22,6 @@ export function todayProgress(tasks: Task[], today: string): TodayProgress {
   return { done, total, percent: total > 0 ? Math.round((done / total) * 100) : 0 }
 }
 
-/** Active tasks first, then manual order, with creation time as a stable tiebreaker. */
 export function sortTasks(tasks: Task[]): Task[] {
   return [...tasks].sort((a, b) => {
     if (isDone(a) !== isDone(b)) return isDone(a) ? 1 : -1
@@ -45,7 +43,6 @@ export function filterTasks(tasks: Task[], filter: TaskFilter): Task[] {
   })
 }
 
-/** Matches title, description and category name. */
 export function searchTasks(tasks: Task[], query: string, categories: Category[] = []): Task[] {
   const needle = query.trim().toLowerCase()
   if (!needle) return tasks
@@ -62,7 +59,6 @@ export function searchTasks(tasks: Task[], query: string, categories: Category[]
   })
 }
 
-/** Inbox lists tasks that are still to do. Status stays one of the three spec values. */
 export function isInboxTask(task: Task): boolean {
   return task.status === 'todo'
 }
@@ -71,12 +67,10 @@ export function isTodayTask(task: Task, today: string): boolean {
   return task.dueDate === today
 }
 
-/** Unfinished tasks scheduled before today. */
 export function isOverdue(task: Task, today: string): boolean {
   return !isDone(task) && task.dueDate < today
 }
 
-/** Weeks start on Monday everywhere in the product. */
 export function upcomingBucket(taskDate: string, today: string): UpcomingBucket {
   if (taskDate === addIsoDays(today, 1)) return 'tomorrow'
   if (taskDate <= endOfIsoWeek(today, 1)) return 'week'
@@ -96,7 +90,6 @@ export function groupUpcoming(tasks: Task[], today: string): Record<UpcomingBuck
   return groups
 }
 
-/** Local calendar day of completedAt. Null when the task is not done or the stamp is unknown. */
 export function completionDay(task: Task): string | null {
   if (!isDone(task)) return null
   return timestampToIsoDay(task.completedAt)
@@ -121,7 +114,6 @@ export function groupCompleted(tasks: Task[], today: string): Record<CompletedBu
   return groups
 }
 
-/** Completed task count per local calendar day. Unknown completion times are omitted. */
 export function completedByDay(tasks: Task[]): Map<string, number> {
   const counts = new Map<string, number>()
   for (const task of tasks) {
@@ -148,18 +140,12 @@ export function subtaskProgress(subtasks: Subtask[]): { done: number; total: num
   }
 }
 
-/** Places a new task at the end of the current list. */
 export function nextSortOrder(tasks: Task[]): number {
   return tasks.reduce((max, task) => Math.max(max, task.sortOrder), 0) + 1
 }
 
-/** PostgreSQL INT4. Positions stay far below this. */
 export const SORT_ORDER_MAX = 2_147_483_647
 
-/**
- * Reorders `visibleOrderedIds` as one block and keeps every other task in place.
- * Positions are small integers so they fit `Task.sortOrder`.
- */
 export function assignSortOrders(
   all: Task[],
   visibleOrderedIds: string[],

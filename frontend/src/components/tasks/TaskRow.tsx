@@ -34,15 +34,10 @@ interface TaskRowProps {
   showDate?: boolean
 }
 
-/** Static row, used wherever the order is derived rather than user-controlled. */
 export const TaskRow = memo(function TaskRow({ task, showDate }: TaskRowProps) {
   return <Row task={task} showDate={showDate} />
 })
 
-/**
- * Draggable row. Kept separate so `useSortable` is only ever called inside a
- * `SortableContext`.
- */
 export const SortableTaskRow = memo(function SortableTaskRow({ task, showDate }: TaskRowProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: task.id,

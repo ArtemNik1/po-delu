@@ -27,8 +27,6 @@ export function SettingsPage() {
   const setCategoryModalOpen = useUiStore((state) => state.setCategoryModalOpen)
   const requestConfirm = useUiStore((state) => state.requestConfirm)
 
-  // `null` means "not edited", so a profile update from elsewhere flows straight
-  // through without an effect syncing props into state.
   const [draftName, setDraftName] = useState<string | null>(null)
   const name = draftName ?? profile?.display_name ?? ''
 

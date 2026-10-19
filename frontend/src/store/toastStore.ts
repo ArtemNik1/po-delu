@@ -47,7 +47,6 @@ export const useToastStore = create<ToastState>((set, get) => ({
       toasts: [...state.toasts.filter((item) => item.id !== id), { ...toast, id }].slice(-MAX_VISIBLE),
     }))
 
-    // Undo actions need more reading time than plain notices.
     const lifetime = durationMs ?? (toast.action ? 7000 : 3400)
     timers.set(
       id,

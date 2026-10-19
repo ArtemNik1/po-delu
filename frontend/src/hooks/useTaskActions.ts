@@ -8,7 +8,6 @@ import type { Status, Task } from '../types/database'
 import { addDaysIso } from '../utils/dates'
 import { playCompleteSound } from '../utils/misc'
 
-/** Shared task verbs so rows, the detail panel and Focus mode behave identically. */
 export function useTaskActions() {
   const updateTask = useDataStore((state) => state.updateTask)
   const deleteTask = useDataStore((state) => state.deleteTask)

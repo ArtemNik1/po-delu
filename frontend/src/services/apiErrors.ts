@@ -22,7 +22,6 @@ function mapKnownMessage(message: string): string | null {
   return null
 }
 
-/** Localizes backend/Axios errors for toast and form display. */
 export function getApiErrorMessage(error: unknown): string {
   if (axios.isAxiosError(error)) {
     if (!error.response) return translate('api.error.network')
@@ -46,7 +45,7 @@ export function getApiErrorMessage(error: unknown): string {
     if (status >= 500) return translate('api.error.server')
 
     if (raw && !/^[A-Z_]+$/.test(raw) && raw.length < 160) {
-      // Prefer a short human message from the API when it is already safe.
+
       const known = mapKnownMessage(raw)
       if (known) return known
     }

@@ -1,4 +1,3 @@
-# Keep this project name so Compose reuses the existing PostgreSQL volume.
 name: nexora
 
 services:

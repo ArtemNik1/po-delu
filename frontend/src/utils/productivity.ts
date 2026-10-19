@@ -13,13 +13,6 @@ export function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value))
 }
 
-/**
- * Productivity score, 0-100:
- *   40 pts — 7-day completion rate
- *   25 pts — progress against today's daily goal
- *   25 pts — current streak, saturating at 14 days
- *   10 pts — overdue penalty, empty at 8+ overdue tasks
- */
 export function calculateProductivityScore(input: ProductivityInput): number {
   const goal = Math.max(input.dailyGoal, 1)
   const rateScore = clamp(input.completionRate, 0, 1) * 40
@@ -34,11 +27,6 @@ export interface Streaks {
   best: number
 }
 
-/**
- * A day counts when at least `dailyGoal` tasks were completed.
- * The current streak ignores today while it is still unfinished, so an
- * in-progress day never breaks an otherwise healthy streak.
- */
 export function computeStreaks(
   completedByDay: Map<string, number>,
   dailyGoal: number,

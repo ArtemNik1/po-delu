@@ -17,7 +17,7 @@ export interface Profile {
 export interface UserSettings {
   user_id: string
   theme: ThemePreference
-  /** `null` means "follow the browser preference". */
+
   language: Language | null
   week_starts_on: 0 | 1
   daily_goal: number

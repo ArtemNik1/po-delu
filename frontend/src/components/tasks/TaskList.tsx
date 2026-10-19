@@ -21,7 +21,7 @@ import { SortableTaskRow, TaskRow } from './TaskRow'
 
 interface TaskListProps {
   tasks: Task[]
-  /** Drag-and-drop is only meaningful where the order is user-controlled. */
+
   reorderable?: boolean
   showDate?: boolean
   ariaLabel?: string

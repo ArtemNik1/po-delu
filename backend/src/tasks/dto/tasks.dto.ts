@@ -25,7 +25,6 @@ const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const TIME = /^([01]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$/;
 const SORT_ORDER_MAX = 2_147_483_647;
 
-/** A real clock time is checked. `null` and `''` clear the field. */
 function WhenTime(): PropertyDecorator {
   return ValidateIf(
     (_, value: unknown) =>
@@ -37,7 +36,6 @@ function trimString({ value }: { value: unknown }): unknown {
   return typeof value === 'string' ? value.trim() : value;
 }
 
-/** Omitted fields skip validation. null is still validated and rejected. */
 function WhenPresent(): PropertyDecorator {
   return ValidateIf((_, value: unknown) => value !== undefined);
 }

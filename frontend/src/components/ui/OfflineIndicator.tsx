@@ -29,7 +29,6 @@ export function OfflineIndicator() {
   )
 }
 
-/** Shown when a saved token cannot be checked because the API is unreachable. */
 export function OfflineScreen() {
   const retrySession = useAuthStore((state) => state.retrySession)
   const profileLoading = useAuthStore((state) => state.profileLoading)

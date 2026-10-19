@@ -1,13 +1,3 @@
-/**
- * Tiny translation layer. Two languages, no runtime dependency.
- *
- * A phrase is either a plain string or a set of plural forms selected by the
- * `count` variable. Placeholders use `{name}` and are replaced from `vars`.
- *
- * `en` is the source of truth: `ru` is typed as `Record<TranslationKey, Phrase>`,
- * so a missing or misspelled key fails the typecheck instead of shipping.
- */
-
 export type Language = 'en' | 'ru'
 
 export interface PluralForms {
@@ -27,7 +17,7 @@ export const LANGUAGES: { value: Language; nativeLabel: string }[] = [
 ]
 
 const en = {
-  // ---- Generic ----
+
   'app.tagline': 'Own your day.',
   'common.cancel': 'Cancel',
   'common.close': 'Close',
@@ -70,7 +60,6 @@ const en = {
   'list.done': 'Done',
   'task.status': 'Status',
 
-  // ---- Navigation ----
   'nav.today': 'Today',
   'nav.upcoming': 'Upcoming',
   'nav.inbox': 'Inbox',
@@ -97,7 +86,6 @@ const en = {
   'header.searchPlaceholder': 'Search by title, notes or category…',
   'header.settings': 'Settings',
 
-  // ---- Filters ----
   'filters.button': 'Filters',
   'filters.dialog': 'Filter tasks',
   'filters.priority': 'Priority',
@@ -106,7 +94,6 @@ const en = {
   'filters.state': 'State',
   'filters.reset': 'Reset filters',
 
-  // ---- Quick add ----
   'quickAdd.trigger': 'Add task',
   'quickAdd.placeholder': 'What needs to be done?',
   'quickAdd.titleLabel': 'Task title',
@@ -121,7 +108,6 @@ const en = {
   'quickAdd.description': 'Description',
   'quickAdd.descriptionPlaceholder': 'Optional notes',
 
-  // ---- Task row ----
   'task.openDetails': 'Open details for {title}',
   'task.reorder': 'Reorder {title}',
   'task.moveToTomorrow': 'Move to tomorrow',
@@ -133,7 +119,6 @@ const en = {
   'task.subtaskProgress': '{done}/{total} subtasks',
   'task.copyTitle': '{title} (copy)',
 
-  // ---- Task details ----
   'details.eyebrow': 'Task details',
   'details.saving': 'Saving…',
   'details.saved': 'Saved',
@@ -161,7 +146,6 @@ const en = {
   'details.duplicate': 'Duplicate',
   'details.delete': 'Delete',
 
-  // ---- Confirmations ----
   'confirm.deleteTask.title': 'Delete this task?',
   'confirm.deleteTask.description':
     '"{title}" and its subtasks will be removed. You can undo this right after.',
@@ -170,7 +154,6 @@ const en = {
   'confirm.deleteCategory.description': 'Tasks in this category are kept — they simply become uncategorised.',
   'confirm.deleteCategory.confirm': 'Delete category',
 
-  // ---- Toasts and errors ----
   'toast.taskCreated': 'Task created',
   'toast.taskSaved': 'Changes saved',
   'toast.taskDeleted': 'Task deleted',
@@ -201,7 +184,6 @@ const en = {
   'error.session': 'Session error',
   'error.signOut': 'Could not sign out cleanly',
 
-  // ---- Today ----
   'today.focus': "Today's focus",
   'today.completedWord': 'completed',
   'today.progressAria': 'Tasks completed today',
@@ -227,7 +209,6 @@ const en = {
   'today.allDoneTitle': 'Everything planned for today is done.',
   'today.allDoneDescription': 'Enjoy the quiet, or pull something forward from Upcoming.',
 
-  // ---- Upcoming ----
   'upcoming.eyebrow': 'Schedule',
   'upcoming.title': 'Upcoming',
   'upcoming.pickDate': 'Pick a date',
@@ -244,7 +225,6 @@ const en = {
   'upcoming.emptyTitle': 'Nothing on the horizon.',
   'upcoming.emptyDescription': 'Pick a date above and plan the next thing that actually matters.',
 
-  // ---- Inbox ----
   'inbox.eyebrow': 'Capture',
   'inbox.title': 'Inbox',
   'inbox.schedule': 'Schedule',
@@ -253,7 +233,6 @@ const en = {
   'inbox.emptyTitle': 'Nothing to do.',
   'inbox.emptyDescription': 'Tasks marked “To do” are listed here. Moving the due date does not change the status.',
 
-  // ---- Completed ----
   'completed.eyebrow': 'Archive',
   'completed.title': 'Completed',
   'completed.restoreAll': 'Restore all',
@@ -261,7 +240,6 @@ const en = {
   'completed.emptyTitle': 'No finished work yet.',
   'completed.emptyDescription': 'Completed tasks collect here, grouped by the day you closed them.',
 
-  // ---- Analytics ----
   'analytics.eyebrow': 'Signal',
   'analytics.title': 'Analytics',
   'analytics.completedToday': 'Completed today',
@@ -287,7 +265,6 @@ const en = {
   'analytics.heatmapTitle': 'Activity, last 120 days',
   'analytics.heatmapDay': '{date} — {count} completed',
 
-  // ---- Settings ----
   'settings.eyebrow': 'Preferences',
   'settings.title': 'Settings',
   'settings.profile': 'Profile',
@@ -316,7 +293,6 @@ const en = {
   'settings.account': 'Account',
   'settings.accountDescription': 'Your sign-in details.',
 
-  // ---- Categories ----
   'category.newTitle': 'New category',
   'category.newDescription': 'Group related work — Work, Study, Health or anything of your own.',
   'category.name': 'Name',
@@ -326,7 +302,6 @@ const en = {
   'category.create': 'Create category',
   'category.delete': 'Delete category {name}',
 
-  // ---- Focus ----
   'focus.eyebrow': 'Focus',
   'focus.exit': 'Exit focus mode',
   'focus.estimated': 'Estimated {duration}',
@@ -350,7 +325,6 @@ const en = {
   'focus.loading': 'Loading session…',
   'focus.backToToday': 'Back to Today',
 
-  // ---- Auth ----
   'auth.email': 'Email',
   'auth.password': 'Password',
   'auth.loginTitle': 'Welcome back',
@@ -383,7 +357,6 @@ const en = {
 
   'notFound.back': 'Back to Today',
 
-  // ---- Onboarding ----
   'onboarding.step': 'Step {current} of {total}',
   'onboarding.nameTitle': "What's your name?",
   'onboarding.nameSubtitle': 'Used for your daily greeting. Nothing else.',
@@ -396,22 +369,11 @@ const en = {
     'Add a task with the button on Today. Everything syncs across your devices automatically.',
   'onboarding.openToday': 'Open Today',
 
-
-
-
-
-
-
-
-
-
-
   'common.save': 'Save',
   'common.create': 'Create',
   'common.copy': 'Copy',
   'common.optional': 'Optional',
 
-  // ---- Misc screens ----
   'offline.message': 'Offline — showing your last synced tasks',
   'session.offlineTitle': 'Can’t reach the server',
   'session.offlineBody': 'Your sign-in is still saved. Try again when the connection is back.',
@@ -780,16 +742,6 @@ const ru: Record<TranslationKey, Phrase> = {
     'Добавьте задачу кнопкой на «Сегодня». Всё синхронизируется между устройствами автоматически.',
   'onboarding.openToday': 'Открыть «Сегодня»',
 
-
-
-
-
-
-
-
-
-
-
   'common.save': 'Сохранить',
   'common.create': 'Создать',
   'common.copy': 'Копировать',
@@ -806,7 +758,6 @@ const ru: Record<TranslationKey, Phrase> = {
 
 const DICTIONARIES: Record<Language, Record<TranslationKey, Phrase>> = { en, ru }
 
-/** Flattened key lists for parity checks and tooling. */
 export function translationKeys(): TranslationKey[] {
   return Object.keys(en) as TranslationKey[]
 }
@@ -823,7 +774,6 @@ export function isLanguage(value: unknown): value is Language {
   return value === 'en' || value === 'ru'
 }
 
-/** Last chosen language, used before settings load and if the cloud row is missing. */
 export function readStoredLanguage(): Language | null {
   try {
     const value = localStorage.getItem(STORAGE_KEY)
@@ -837,11 +787,10 @@ export function writeStoredLanguage(language: Language): void {
   try {
     localStorage.setItem(STORAGE_KEY, language)
   } catch {
-    // Preference is cosmetic; ignore storage failures.
+
   }
 }
 
-/** Picks a supported language from the browser preferences. */
 export function detectLanguage(): Language {
   const stored = readStoredLanguage()
   if (stored) return stored
@@ -856,7 +805,6 @@ export function detectLanguage(): Language {
 
 let currentLanguage: Language = DEFAULT_LANGUAGE
 
-/** Set once from the user's saved settings; also used outside React. */
 export function setCurrentLanguage(language: Language): void {
   currentLanguage = language
 }
@@ -865,7 +813,6 @@ export function getCurrentLanguage(): Language {
   return currentLanguage
 }
 
-/** Russian needs three plural forms; English needs two. */
 export function pluralForm(language: Language, count: number): keyof PluralForms {
   const value = Math.abs(count)
   if (language !== 'ru') return value === 1 ? 'one' : 'other'
@@ -892,7 +839,6 @@ function interpolate(template: string, vars: TranslationVars | undefined): strin
   })
 }
 
-/** Translates a key in an explicit language. Falls back to English, never to the raw key. */
 export function translateIn(
   language: Language,
   key: TranslationKey,
@@ -904,7 +850,6 @@ export function translateIn(
   return interpolate(selectPhrase(phrase, language, count), vars)
 }
 
-/** Translates a key in the active language. Safe to call outside React. */
 export function translate(key: TranslationKey, vars?: TranslationVars): string {
   return translateIn(currentLanguage, key, vars)
 }

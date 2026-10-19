@@ -4,7 +4,6 @@ import { useUiStore } from '../../store/uiStore'
 import { Button } from './Button'
 import { Modal } from './Modal'
 
-/** App-wide replacement for `window.confirm`. */
 export function ConfirmDialog() {
   const confirm = useUiStore((state) => state.confirm)
   const closeConfirm = useUiStore((state) => state.closeConfirm)
@@ -20,7 +19,7 @@ export function ConfirmDialog() {
       const result = await confirm.onConfirm()
       if (result !== false) closeConfirm()
     } catch {
-      // Keep the dialog mounted so the same action can be tried again.
+
     } finally {
       busyRef.current = false
       setBusy(false)

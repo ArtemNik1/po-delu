@@ -48,7 +48,6 @@ function settleStaleFilter(): void {
   refreshCurrentFilter()
 }
 
-/** A list read that overlapped a mutation still describes the previous server state. */
 function listSnapshotIsFresh(epoch: number, startedDuringMutation: boolean): boolean {
   return !startedDuringMutation && epoch === listEpoch && mutationDepth === 0
 }

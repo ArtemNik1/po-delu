@@ -21,7 +21,6 @@ export function Select({ className, children, ...props }: ComponentPropsWithRef<
   )
 }
 
-/** Label wrapper that wires `htmlFor` to a single control via a generated id. */
 export function Field({
   label,
   hint,

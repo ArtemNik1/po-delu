@@ -1,8 +1,3 @@
-/*
- * Precaches the app shell and serves same-origin GET requests stale-while-revalidate.
- * Cross-origin API calls are ignored so task data is never stored in the Cache API.
- */
-
 const VERSION = 'po-delu-v1'
 const SHELL = ['./', './index.html', './manifest.webmanifest', './favicon.svg']
 
@@ -32,7 +27,6 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(request.url)
   if (url.origin !== self.location.origin) return
 
-  // Navigations fall back to the cached shell; HashRouter handles the route.
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request).catch(() => caches.match('./index.html').then((cached) => cached ?? Response.error())),

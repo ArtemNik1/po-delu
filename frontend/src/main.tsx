@@ -16,11 +16,10 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>,
 )
 
-// Registered relative to the document so it works from any GitHub Pages sub-path.
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(() => {
-      // A missing or blocked service worker only costs offline support.
+
     })
   })
 }

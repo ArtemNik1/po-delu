@@ -50,7 +50,6 @@ interface HealthBody {
   status: string;
 }
 
-/** Reads a JSON body without treating supertest's `any` as a typed value. */
 function readJson<T>(response: Response): T {
   const payload = (response as { body: unknown }).body;
   return payload as T;

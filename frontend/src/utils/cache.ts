@@ -11,7 +11,6 @@ interface CachePayload {
 
 type CacheInput = Pick<CachePayload, 'tasks' | 'categories' | 'subtasks'>
 
-/** Best-effort local snapshot so a cold start works offline. */
 export function writeCache(userId: string, input: CacheInput): void {
   try {
     const payload: CachePayload = {
@@ -22,7 +21,7 @@ export function writeCache(userId: string, input: CacheInput): void {
     }
     localStorage.setItem(PREFIX + userId, JSON.stringify(payload))
   } catch {
-    // Storage can be full or blocked in private mode; the app works without it.
+
   }
 }
 
@@ -59,6 +58,6 @@ export function clearCache(userId: string): void {
   try {
     localStorage.removeItem(PREFIX + userId)
   } catch {
-    // Nothing to recover from.
+
   }
 }
