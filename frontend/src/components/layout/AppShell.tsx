@@ -1,10 +1,15 @@
 import { Outlet, useLocation } from 'react-router-dom'
+import { useAuthStore } from '../../store/authStore'
+import { useTranslation } from '../../hooks/useTranslation'
+import { isDemoToken } from '../../services/demoApi'
 import { useUiStore } from '../../store/uiStore'
 import { MobileHeader, MobileTabBar } from './MobileNav'
 import { Sidebar } from './Sidebar'
 import { TaskDetails } from '../tasks/TaskDetails'
 
 export function AppShell() {
+  const demo = isDemoToken(useAuthStore((state) => state.token))
+  const { t } = useTranslation()
   const detailsOpen = useUiStore((state) => state.selectedTaskId !== null)
   const location = useLocation()
 
@@ -19,6 +24,7 @@ export function AppShell() {
             detailsOpen ? 'md:pr-[432px]' : ''
           }`}
         >
+          {demo ? <p className="mb-5 rounded-xl border border-line bg-elevated/60 px-4 py-3 text-xs leading-relaxed text-muted">{t('demo.banner')}</p> : null}
           <Outlet key={location.pathname} />
         </main>
         <MobileTabBar />

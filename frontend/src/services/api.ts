@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios'
 import type { InternalAxiosRequestConfig } from 'axios'
 import { getApiErrorMessage } from './apiErrors'
+import { demoAdapter, isDemoToken } from './demoApi'
 
 export { getApiErrorMessage }
 
@@ -34,6 +35,7 @@ export const api = axios.create({
 
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const token = getStoredToken()
+  if (isDemoToken(token)) config.adapter = demoAdapter
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
