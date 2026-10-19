@@ -51,7 +51,7 @@ export function App() {
                 path="/register"
                 element={
                   <GuestOnly>
-                    <RegisterPage />
+                    {import.meta.env.VITE_DEMO_ONLY === 'true' ? <Navigate to="/login" replace /> : <RegisterPage />}
                   </GuestOnly>
                 }
               />

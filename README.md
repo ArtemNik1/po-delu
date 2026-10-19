@@ -7,6 +7,12 @@ frontend/  React + TypeScript + Vite + Axios + Zustand
 backend/   NestJS + Prisma + PostgreSQL + JWT
 ```
 
+## Посмотреть приложение
+
+На странице входа есть кнопка **«Посмотреть демо»**. В демо уже созданы задачи и подзадачи: можно менять сроки, статусы, категории, удалять и восстанавливать задачи. Все изменения остаются только в этом браузере. Демо не обращается к серверу и не использует реальные учётные записи.
+
+![Интерфейс приложения](docs/images/overview.jpg)
+
 ## Запуск
 
 ```bash
@@ -40,4 +46,8 @@ npm run build
 
 Frontend — GitHub Pages (`HashRouter`, workflow `.github/workflows/deploy.yml`).  
 Backend и PostgreSQL — отдельный сервер через Docker Compose.  
-Для Pages задайте GitHub variable `VITE_API_URL`.
+В Settings → Pages выберите источник **GitHub Actions**. После объединения изменений в `main` workflow соберёт и опубликует frontend. Без `VITE_API_URL` публикуется версия только с демо-входом - отдельный сервер для просмотра портфолио не нужен.
+
+Чтобы включить настоящие аккаунты, разместите API и PostgreSQL, задайте GitHub variable `VITE_API_URL` (HTTPS-адрес с `/api`) и разрешите адрес Pages в `CORS_ORIGIN` серверной части. Секрет JWT и строка подключения остаются только на сервере. Следующая сборка включит регистрацию и вход.
+
+`check.yml` проверяет frontend и backend. Для E2E он поднимает отдельный PostgreSQL и применяет миграции.

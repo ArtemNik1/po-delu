@@ -4,6 +4,7 @@ import { detectLanguage, translate, type Language } from '../lib/i18n'
 import { applyDateLocale } from '../lib/locale'
 import { THEME_COLOR, resolveTheme } from '../lib/theme'
 import { authApi } from '../services/authApi'
+import { DEMO_TOKEN, demoAccount } from '../services/demoApi'
 import { getApiErrorMessage, getStoredToken, setStoredToken } from '../services/api'
 import type { Profile, UserSettings } from '../types/database'
 import { clearSessionCache, readSession, tokenSubject, writeSession } from '../utils/sessionCache'
@@ -37,6 +38,7 @@ interface AuthState {
   retrySession: () => Promise<void>
   signIn: (email: string, password: string) => Promise<AuthResult>
   signUp: (email: string, password: string, displayName?: string) => Promise<AuthResult>
+  enterDemo: () => void
   signOut: () => Promise<void>
   updateProfile: (patch: Partial<Pick<Profile, 'display_name' | 'avatar_url'>>) => Promise<boolean>
   updateSettings: (patch: Partial<UserSettings>) => Promise<boolean>
@@ -269,6 +271,18 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       set({ submitting: false, error: message })
       return { error: message }
     }
+  },
+
+  enterDemo: () => {
+    const me = demoAccount()
+    const settings = storedSettings(me.settings, me.id)
+    setStoredToken(DEMO_TOKEN)
+    useDataStore.getState().reset()
+    set({ token: DEMO_TOKEN, user: { id: me.id, email: me.email, displayName: me.displayName },
+      profile: me.profile, settings, submitting: false, initialized: true, profileLoading: false, offline: false, error: null })
+    get().applyTheme(settings.theme)
+    get().applyLanguage(settings.language ?? null)
+    rememberSession(get)
   },
 
   signOut: async () => {

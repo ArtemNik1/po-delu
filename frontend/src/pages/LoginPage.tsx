@@ -8,6 +8,8 @@ import { useAuthStore } from '../store/authStore'
 
 export function LoginPage() {
   const signIn = useAuthStore((state) => state.signIn)
+  const enterDemo = useAuthStore((state) => state.enterDemo)
+  const demoOnly = import.meta.env.VITE_DEMO_ONLY === 'true'
   const submitting = useAuthStore((state) => state.submitting)
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -36,17 +38,17 @@ export function LoginPage() {
   return (
     <AuthShell
       title={t('auth.loginTitle')}
-      subtitle={t('auth.loginSubtitle')}
-      footer={
+      subtitle={t(demoOnly ? 'demo.only' : 'auth.loginSubtitle')}
+      footer={demoOnly ? null : (
         <>
           {t('auth.noAccount')}{' '}
           <Link className="text-ink underline-offset-4 hover:underline" to="/register">
             {t('auth.createOne')}
           </Link>
         </>
-      }
+      )}
     >
-      <form className="space-y-4" onSubmit={(event) => void onSubmit(event)} noValidate>
+      {!demoOnly && <form className="space-y-4" onSubmit={(event) => void onSubmit(event)} noValidate>
         <Field label={t('auth.email')}>
           {(id) => (
             <Input
@@ -83,7 +85,13 @@ export function LoginPage() {
         <Button className="w-full" type="submit" loading={submitting}>
           {t('auth.signIn')}
         </Button>
-      </form>
+      </form>}
+      <div className={demoOnly ? '' : 'mt-6 border-t border-line pt-5'}>
+        <Button className="w-full" variant={demoOnly ? 'primary' : 'subtle'} onClick={() => { enterDemo(); navigate('/', { replace: true }) }}>
+          {t('demo.open')}
+        </Button>
+        <p className="mt-3 text-center text-xs leading-relaxed text-muted">{t('demo.description')}</p>
+      </div>
     </AuthShell>
   )
 }

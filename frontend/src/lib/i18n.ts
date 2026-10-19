@@ -27,6 +27,11 @@ export const LANGUAGES: { value: Language; nativeLabel: string }[] = [
 ]
 
 const en = {
+  'demo.open': 'Explore the demo',
+  'demo.description': 'Try the app without an account. Changes stay in this browser.',
+  'demo.banner': 'Demo mode. Your changes are saved only in this browser.',
+  'demo.only': 'Explore a working demo without registration.',
+
   // ---- Generic ----
   'app.tagline': 'Own your day.',
   'common.cancel': 'Cancel',
@@ -424,6 +429,11 @@ const en = {
 export type TranslationKey = keyof typeof en
 
 const ru: Record<TranslationKey, Phrase> = {
+  'demo.open': 'Посмотреть демо',
+  'demo.description': 'Без регистрации. Изменения сохраняются только в этом браузере.',
+  'demo.banner': 'Демо-режим. Изменения сохраняются только в этом браузере.',
+  'demo.only': 'Посмотрите работу приложения без регистрации.',
+
   'app.tagline': 'Управляй своим днём.',
   'common.cancel': 'Отмена',
   'common.close': 'Закрыть',
